@@ -4,7 +4,7 @@ node('swarm') {
 
     stage 'Package'
     sh 'mvn clean package -DskipTests -DargLine="-Xmx1024m"'
-
+    sh 'cp target/jpetstore.war docker/'
     dir('docker') {
       sh 'docker build -t jpetstore:$BUILD_NUMBER .'
     }
@@ -14,7 +14,7 @@ node('swarm') {
     echo 'deploy app to TEST env'
 
     dir('docker') {
-      sh '/usr/local/rancher-compose-v0.8.4/rancher-compose up -p PetStore-test --url=http://192.168.50.102:8080 --access-key=ACD7F882853FA5B96F03 --secret-key=KHxC91gsw56mbbqBcit1jJasvTVCYU4DjL1ZD9Rs'
+      sh '/usr/local/rancher-compose-v0.8.4/rancher-compose up -p PetStore-test --url http://192.168.50.102:8080 --access-key ACD7F882853FA5B96F03 --secret-key KHxC91gsw56mbbqBcit1jJasvTVCYU4DjL1ZD9Rs'
     }
 
     stage 'UAT'
