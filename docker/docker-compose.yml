@@ -1,2 +1,4 @@
 jpetstore:
   image: "192.168.50.103:5000/jpetstore:$BUILD_NUMBER"
+  ports:
+    - "80$BUILD_NUMBER:8080"
