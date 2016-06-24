@@ -116,14 +116,14 @@
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <scope>test</scope>
-    </dependency>        
+    </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>2.0.52-beta</version>
       <scope>test</scope>
     </dependency>
-    
+
   </dependencies>
 
   <build>
@@ -144,7 +144,7 @@
         <configuration>
           <locales>en,es,ja,ko</locales>
         </configuration>
-      </plugin>   
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
