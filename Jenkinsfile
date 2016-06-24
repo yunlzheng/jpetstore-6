@@ -7,6 +7,8 @@ node('swarm') {
     sh 'cp target/jpetstore.war docker/'
     dir('docker') {
       sh 'docker build -t jpetstore:$BUILD_NUMBER .'
+      sh 'docker tag jpetstore:$BUILD_NUMBER 192.168.50.103:5000/jpetstore:$BUILD_NUMBER'
+      sh 'docker push 192.168.50.103:5000/jpetstore:$BUILD_NUMBER'
     }
 
     stage 'Test'
@@ -14,14 +16,24 @@ node('swarm') {
     echo 'deploy app to TEST env'
 
     dir('docker') {
-      sh '/usr/local/rancher-compose-v0.8.4/rancher-compose up -p PetStore-test --url http://192.168.50.102:8080 --access-key ACD7F882853FA5B96F03 --secret-key KHxC91gsw56mbbqBcit1jJasvTVCYU4DjL1ZD9Rs'
+      sh '/usr/local/rancher-compose-v0.8.4/rancher-compose --url http://192.168.50.101:8080 --access-key ACD7F882853FA5B96F03 --secret-key KHxC91gsw56mbbqBcit1jJasvTVCYU4DjL1ZD9Rs -p PetStore-test up -d'
     }
 
     stage 'UAT'
 
-    echo 'deploy app to UAT env'
+    input '是否部署到UAT环境'
+
+    dir('docker') {
+      sh '/usr/local/rancher-compose-v0.8.4/rancher-compose --url http://192.168.50.101:8080 --access-key ACD7F882853FA5B96F03 --secret-key KHxC91gsw56mbbqBcit1jJasvTVCYU4DjL1ZD9Rs -p PetStore-uat up -d'
+    }
 
     stage 'Prod'
 
-    echo 'deploy app to Prod env'
+    input '是否部署到PROD环境'
+
+    dir('docker') {
+      sh '/usr/local/rancher-compose-v0.8.4/rancher-compose --url http://192.168.50.101:8080 --access-key ACD7F882853FA5B96F03 --secret-key KHxC91gsw56mbbqBcit1jJasvTVCYU4DjL1ZD9Rs -p PetStore-prod up -d'
+      sh 'docker tag -f 192.168.50.103:5000/jpetstore:$BUILD_NUMBER 192.168.50.103:5000/jpetstore:latest'
+      sh 'docker push 192.168.50.103:5000/jpetstore:latest'
+    }
 }
