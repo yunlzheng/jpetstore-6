@@ -16,6 +16,7 @@ node('swarm') {
     echo 'deploy app to TEST env'
 
     dir('docker') {
+      sh '/usr/local/rancher-compose-v0.8.4/rancher-compose --url http://192.168.50.101:8080 --access-key ACD7F882853FA5B96F03 --secret-key KHxC91gsw56mbbqBcit1jJasvTVCYU4DjL1ZD9Rs -p PetStore-test rm --force'
       sh '/usr/local/rancher-compose-v0.8.4/rancher-compose --url http://192.168.50.101:8080 --access-key ACD7F882853FA5B96F03 --secret-key KHxC91gsw56mbbqBcit1jJasvTVCYU4DjL1ZD9Rs -p PetStore-test up -d'
     }
 
@@ -24,6 +25,7 @@ node('swarm') {
     input '是否部署到UAT环境'
 
     dir('docker') {
+      sh '/usr/local/rancher-compose-v0.8.4/rancher-compose --url http://192.168.50.101:8080 --access-key ACD7F882853FA5B96F03 --secret-key KHxC91gsw56mbbqBcit1jJasvTVCYU4DjL1ZD9Rs -p PetStore-uat rm --force'
       sh '/usr/local/rancher-compose-v0.8.4/rancher-compose --url http://192.168.50.101:8080 --access-key ACD7F882853FA5B96F03 --secret-key KHxC91gsw56mbbqBcit1jJasvTVCYU4DjL1ZD9Rs -p PetStore-uat up -d'
     }
 
