@@ -28,5 +28,5 @@ Running JPetStore sample under Tomcat (using maven).
 
 mvn clean tomcat:run
 
-- Run application in browser http://localhost:8080/jpetstore/ 
+- Run application in browser http://localhost:8080/jpetstore/
 - Press Ctrl-C to stop the server.
