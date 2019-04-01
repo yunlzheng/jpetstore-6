@@ -6,6 +6,6 @@ metadata:
   name: tomcat-pod
 spec:
   containers:
-  - image: nginx
+  - image: ${IMAGE_TAG}
     imagePullPolicy: Always
     name: tomcat
